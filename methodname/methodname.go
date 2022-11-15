@@ -56,12 +56,12 @@ func GenerateFile(p *protogen.Plugin, f *protogen.File) *protogen.GeneratedFile 
 	g.P()
 	g.P(`package `, f.GoPackageName)
 	g.P()
-	g.P(`const (`)
 
 	services := f.Services
 	for i, service := range services {
 		sort.Slice(services[i].Methods, func(j, k int) bool { return services[i].Methods[j].GoName < services[i].Methods[k].GoName })
 
+		g.P(`const (`)
 		for _, method := range service.Methods {
 			g.P(`	FullMethod`, method.GoName, ` = `, strconv.Quote(path.Join("/"+string(service.Desc.FullName()), string(method.Desc.Name()))))
 		}
